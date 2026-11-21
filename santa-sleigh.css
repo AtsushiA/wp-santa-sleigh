@@ -1,0 +1,73 @@
+/**
+ * Santa Sleigh — Santa and his reindeer flying across the screen.
+ *
+ * Colors follow the active theme when it defines the usual preset slugs;
+ * override them with the custom properties below.
+ */
+.santa-sleigh {
+	--santa-sleigh-color: var(--wp--preset--color--contrast, #7a6324);
+	--santa-sleigh-accent: var(--wp--preset--color--accent-1, #d9739f);
+	--santa-sleigh-glow: rgba(255, 255, 255, .8);
+	--santa-sleigh-top: 16vh;
+	--santa-sleigh-width: 300px;
+
+	position: fixed;
+	top: var(--santa-sleigh-top);
+	left: 0;
+	z-index: 3;
+	width: var(--santa-sleigh-width);
+	line-height: 0;
+	color: var(--santa-sleigh-color);
+	pointer-events: none;
+	transform: translateX(-120vw);
+	filter: drop-shadow(0 0 6px var(--santa-sleigh-glow));
+}
+
+.santa-sleigh svg {
+	display: block;
+	width: 100%;
+	height: auto;
+	overflow: visible;
+}
+
+.santa-sleigh__rein {
+	stroke: var(--santa-sleigh-accent);
+}
+
+.santa-sleigh__nose {
+	fill: var(--santa-sleigh-accent);
+}
+
+/* Crosses left to right, then turns around and flies back lower down. */
+@media (prefers-reduced-motion: no-preference) {
+	.santa-sleigh {
+		animation: santa-sleigh-flight 30s linear 2s infinite;
+	}
+}
+
+/* Visitors who prefer reduced motion never see the sleigh, and its legs stop too. */
+@media (prefers-reduced-motion: reduce) {
+	.santa-sleigh {
+		display: none;
+	}
+}
+
+@keyframes santa-sleigh-flight {
+	0% { transform: translate(-110%, 0); }
+	10% { transform: translate(calc(10vw - 110%), -10px); }
+	20% { transform: translate(calc(30vw - 85%), 8px); }
+	30% { transform: translate(calc(60vw - 50%), -12px); }
+	40% { transform: translate(calc(100vw + 40px), -24px); }
+	50% { transform: translate(calc(100vw + 40px), 22vh) scaleX(-1); }
+	60% { transform: translate(70vw, calc(22vh - 10px)) scaleX(-1); }
+	70% { transform: translate(calc(40vw - 50%), calc(22vh + 8px)) scaleX(-1); }
+	80% { transform: translate(calc(10vw - 100%), calc(22vh - 6px)) scaleX(-1); }
+	85%, 100% { transform: translate(-110%, 22vh) scaleX(-1); }
+}
+
+@media (max-width: 600px) {
+	.santa-sleigh {
+		--santa-sleigh-width: 180px;
+		--santa-sleigh-top: 12vh;
+	}
+}
